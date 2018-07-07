@@ -3,6 +3,7 @@
 #include <string>
 #include <cstddef>
 #include <vector>
+#include <fstream>
 
 
 using namespace std;
@@ -55,12 +56,21 @@ size_t split(const std::string &txt, std::vector<std::string> &strs, char ch)
 uint32_t convert_add_to_machinecode(vector<string> &strs){
 	uint32_t code = 32; // 32 for add code
 	int shift_start = 21;
-	for(auto x : strs){
-		removeChar(x,'$');
-		int num = stoi(x);
-		code |= ((code >> shift_start) | num)<< shift_start;
-		shift_start -= 5;
-	}
+	
+	removeChar(strs[1],'$');
+	int num = stoi(strs[1]);
+	code |= ((code >> shift_start) | num)<< shift_start;
+	shift_start -= 5;
+
+	removeChar(strs[2],'$');
+	num = stoi(strs[2]);
+	code |= ((code >> shift_start) | num)<< shift_start;
+	shift_start -= 5;
+	removeChar(strs[0],'$');
+	num = stoi(strs[0]);
+	code |= ((code >> shift_start) | num)<< shift_start;
+	shift_start -= 5;
+	
 	return code;
 }
 
@@ -68,13 +78,13 @@ uint32_t convert_addi_to_machinecode(vector<string> &strs){
 	uint32_t code = 536870912; // prefix for addi
 	int shift_start = 21;
 	
-	removeChar(strs[0],'$');
-	int num = stoi(strs[0]);
+	removeChar(strs[1],'$');
+	int num = stoi(strs[1]);
 	code |= ((code >> shift_start) | num)<< shift_start;
 	shift_start -= 5;
 	
-	removeChar(strs[1],'$');
-	num = stoi(strs[1]);
+	removeChar(strs[0],'$');
+	num = stoi(strs[0]);
 	code |= ((code >> shift_start) | num)<< shift_start;
 	shift_start -= 5;
 
@@ -86,13 +96,13 @@ uint32_t convert_addiu_to_machinecode(vector<string> &strs){
 	uint32_t code = 603979776; // prefix for addi
 	int shift_start = 21;
 	
-	removeChar(strs[0],'$');
-	int num = stoi(strs[0]);
+	removeChar(strs[1],'$');
+	int num = stoi(strs[1]);
 	code |= ((code >> shift_start) | num)<< shift_start;
 	shift_start -= 5;
 	
-	removeChar(strs[1],'$');
-	num = stoi(strs[1]);
+	removeChar(strs[0],'$');
+	num = stoi(strs[0]);
 	code |= ((code >> shift_start) | num)<< shift_start;
 	shift_start -= 5;
 
@@ -102,26 +112,45 @@ uint32_t convert_addiu_to_machinecode(vector<string> &strs){
 }
 
 uint32_t convert_addu_to_machinecode(vector<string> &strs){
+	
 	uint32_t code = 33; // 32 for add code
 	int shift_start = 21;
-	for(auto x : strs){
-		removeChar(x,'$');
-		int num = stoi(x);
-		code |= ((code >> shift_start) | num)<< shift_start;
-		shift_start -= 5;
-	}
+	
+	removeChar(strs[1],'$');
+	int num = stoi(strs[1]);
+	code |= ((code >> shift_start) | num)<< shift_start;
+	shift_start -= 5;
+
+	removeChar(strs[2],'$');
+	num = stoi(strs[2]);
+	code |= ((code >> shift_start) | num)<< shift_start;
+	shift_start -= 5;
+	removeChar(strs[0],'$');
+	num = stoi(strs[0]);
+	code |= ((code >> shift_start) | num)<< shift_start;
+	shift_start -= 5;
+	
+
 	return code;
 }
 
 uint32_t convert_and_to_machinecode(vector<string> &strs){
 	uint32_t code = 36; // 32 for add code
 	int shift_start = 21;
-	for(auto x : strs){
-		removeChar(x,'$');
-		int num = stoi(x);
-		code |= ((code >> shift_start) | num)<< shift_start;
-		shift_start -= 5;
-	}
+	
+	removeChar(strs[1],'$');
+	int num = stoi(strs[1]);
+	code |= ((code >> shift_start) | num)<< shift_start;
+	shift_start -= 5;
+
+	removeChar(strs[2],'$');
+	num = stoi(strs[2]);
+	code |= ((code >> shift_start) | num)<< shift_start;
+	shift_start -= 5;
+	removeChar(strs[0],'$');
+	num = stoi(strs[0]);
+	code |= ((code >> shift_start) | num)<< shift_start;
+	shift_start -= 5;
 	return code;
 }
 
@@ -129,13 +158,13 @@ uint32_t convert_andi_to_machinecode(vector<string> &strs){
 	uint32_t code = 805306368; // prefix for addi
 	int shift_start = 21;
 	
-	removeChar(strs[0],'$');
-	int num = stoi(strs[0]);
+	removeChar(strs[1],'$');
+	int num = stoi(strs[1]);
 	code |= ((code >> shift_start) | num)<< shift_start;
 	shift_start -= 5;
 	
-	removeChar(strs[1],'$');
-	num = stoi(strs[1]);
+	removeChar(strs[0],'$');
+	num = stoi(strs[0]);
 	code |= ((code >> shift_start) | num)<< shift_start;
 	shift_start -= 5;
 
@@ -286,15 +315,27 @@ uint32_t convert_noop_to_machinecode(){
 	return 0;
 }
 
+uint32_t convert_syscall_to_machinecode(){
+	return 12;
+}
+
 uint32_t convert_or_to_machinecode(vector<string> &strs){
 	uint32_t code = 37; // 32 for add code
 	int shift_start = 21;
-	for(auto x : strs){
-		removeChar(x,'$');
-		int num = stoi(x);
-		code |= ((code >> shift_start) | num)<< shift_start;
-		shift_start -= 5;
-	}
+	
+	removeChar(strs[1],'$');
+	int num = stoi(strs[1]);
+	code |= ((code >> shift_start) | num)<< shift_start;
+	shift_start -= 5;
+
+	removeChar(strs[2],'$');
+	num = stoi(strs[2]);
+	code |= ((code >> shift_start) | num)<< shift_start;
+	shift_start -= 5;
+	removeChar(strs[0],'$');
+	num = stoi(strs[0]);
+	code |= ((code >> shift_start) | num)<< shift_start;
+	shift_start -= 5;
 	return code;
 }
 uint32_t convert_sb_to_machinecode(vector<string> &strs){
@@ -314,6 +355,25 @@ uint32_t convert_sb_to_machinecode(vector<string> &strs){
 	code |= offset;
 	return code;
 }
+
+uint32_t convert_sw_to_machinecode(vector<string> &strs){
+	uint32_t code = 2885681152; // prefix for addi
+	int shift_start = 21 - 5;
+	cout<<"here"<<endl;
+	removeChar(strs[0],'$');
+	int num = stoi(strs[0]);
+	code |= ((code >> shift_start) | num)<< shift_start;
+	shift_start = 21;
+	
+	unsigned offset = get_offset(strs[1]);
+	unsigned regval = get_val(strs[1]);
+
+	code |= ((code >> shift_start) | regval)<< shift_start;
+
+	code |= offset;
+	return code;
+}
+
 
 uint32_t convert_to_machinecode(string &name){
 	vector<string> strs;
@@ -360,7 +420,11 @@ uint32_t convert_to_machinecode(string &name){
 		output = convert_or_to_machinecode(arguments);
 	}else if(op == "sb"){
 		output = convert_sb_to_machinecode(arguments);
-	}
+	}else if(op == "sw"){
+		output = convert_sw_to_machinecode(arguments);
+	}else if(op == "syscall"){
+		output = convert_syscall_to_machinecode();
+	} 
 
 
 
@@ -369,9 +433,21 @@ uint32_t convert_to_machinecode(string &name){
 }
 
 
-int main(){
-	string name = "noop";
-	uint32_t instruction = convert_to_machinecode(name);
-	cout<<instruction<<endl;
+int main(int argc, char *argv[]){
+	if(argc < 2){
+		cout<<"Please add file containing assembly code"<<endl;
+		return 0;
+	}
+	string filename = argv[1];
+	ifstream file (filename);
+	if(!file){
+		cout<<"Unable to open file"<<endl;
+		return 0;
+	}
+	string sent;
+	while (getline(file, sent)){
+		uint32_t instruction = convert_to_machinecode(sent);
+		cout<<instruction<<endl;
+	}
 	return 0;
 }
